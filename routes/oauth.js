@@ -14,7 +14,7 @@ router.get('/callback', async (req, res) => {
   const code = req.query.code;
 
   try {
-    const response = await axios.post(`https://www.tiendanube.com/apps/authorize/token', data);
+    const response = await axios.post('https://www.tiendanube.com/apps/authorize/token', data);
 `, {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
