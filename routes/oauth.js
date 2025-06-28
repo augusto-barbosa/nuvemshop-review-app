@@ -14,15 +14,13 @@ router.get('/callback', async (req, res) => {
   const code = req.query.code;
 
   try {
-    const response = await axios.post('https://www.tiendanube.com/apps/authorize/token', data);
-`, {
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      grant_type: 'authorization_code',
-      code,
-      redirect_uri: REDIRECT_URI
-    });
-
+    const response = await axios.post('https://www.tiendanube.com/apps/authorize/token', {
+  client_id: CLIENT_ID,
+  client_secret: CLIENT_SECRET,
+  grant_type: 'authorization_code',
+  code,
+  redirect_uri: REDIRECT_URI
+});
     const { access_token, user_id } = response.data;
     // Aqui você pode salvar access_token no banco (por loja)
 
