@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Avalie seu produto</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Avalie seu produto</h2>
+  <form id="reviewForm">
+    <input type="text" name="name" placeholder="Seu nome" required />
+    <input type="email" name="email" placeholder="Seu e-mail" required />
+    <select name="rating" required>
+      <option value="">Nota</option>
+      <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+      <option value="4">⭐️⭐️⭐️⭐️</option>
+      <option value="3">⭐️⭐️⭐️</option>
+      <option value="2">⭐️⭐️</option>
+      <option value="1">⭐️</option>
+    </select>
+    <textarea name="comment" placeholder="Comentário" rows="5" required></textarea>
+
+    <!-- Hidden fields que virão por query string -->
+    <input type="hidden" name="store_id" />
+    <input type="hidden" name="product_id" />
+
+    <button type="submit">Enviar avaliação</button>
+    <p id="msg"></p>
+  </form>
+
+  <script>
+    const form = document.getElementById('reviewForm');
+    const msg = document.getElementById('msg');
+
+    // Pega os parâmetros da URL
+    const params = new URLSearchParams(window.location.search);
+    form.store_id.value = params.get('store_id');
+    form.product_id.value = params.get('product_id');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      const response = await fetch('/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        msg.textContent = 'Obrigado! Sua avaliação foi enviada.';
+        form.reset();
+      } else {
+        msg.textContent = 'Erro ao enviar. Tente novamente.';
+      }
+    });
+  </script>
+</body>
+</html>
