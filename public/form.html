@@ -73,5 +73,41 @@
       }
     });
   </script>
+  <script>
+  document.getElementById('reviewForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const params = new URLSearchParams(window.location.search);
+    const store_id = params.get('store_id');
+    const product_id = params.get('product_id');
+
+    const data = {
+      name: this.name.value,
+      email: this.email.value,
+      rating: this.rating.value,
+      comment: this.comment.value,
+      store_id,
+      product_id
+    };
+
+    try {
+      const response = await fetch('/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        alert('Avaliação enviada com sucesso!');
+        this.reset();
+      } else {
+        alert('Erro ao enviar avaliação.');
+      }
+    } catch (err) {
+      alert('Erro ao conectar com o servidor.');
+      console.error(err);
+    }
+  });
+</script>
 </body>
 </html>
