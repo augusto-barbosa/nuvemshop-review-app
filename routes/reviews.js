@@ -26,13 +26,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Listar avaliações aprovadas de um produto
-router.get('/:productId', async (req, res) => {
+// Listar avaliações aprovadas de um produto e loja
+router.get('/', async (req, res) => {
   try {
-    const { productId } = req.params;
+    const { store_id, product_id } = req.query;
 
     const reviews = await Review.find({
-      product_id: productId,
+      store_id,
+      product_id,
       approved: true
     }).sort({ created_at: -1 });
 
