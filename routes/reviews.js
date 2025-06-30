@@ -9,9 +9,11 @@ router.get('/widget', async (req, res) => {
       approved: true
     }).sort({ created_at: -1 });
 
-    res.render('review-widget', { reviews }); // Vamos criar esse template já já
+    res.render('review-widget', { reviews });
   } catch (error) {
     console.error('Erro ao carregar widget:', error);
     res.status(500).send('Erro interno');
   }
 });
+
+export default router;
