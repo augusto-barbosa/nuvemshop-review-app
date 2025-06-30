@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: sans-serif; font-size: 14px; }
+    .review { border-bottom: 1px solid #ccc; margin-bottom: 10px; padding-bottom: 10px; }
+    .stars { color: gold; }
+  </style>
+</head>
+<body>
+  <h3>Avaliações</h3>
+  <% if (reviews.length === 0) { %>
+    <p>Este produto ainda não possui avaliações.</p>
+  <% } %>
+  <% reviews.forEach(r => { %>
+    <div class="review">
+      <div><strong><%= r.name %></strong></div>
+      <div class="stars"><%= '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating) %></div>
+      <div><%= r.comment %></div>
+    </div>
+  <% }) %>
+</body>
+</html>
